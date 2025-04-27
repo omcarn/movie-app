@@ -1,0 +1,39 @@
+
+<div class="d-none d-xs-none d-md-block">
+<div class="row w-100">
+    <div class="col-md-4">        
+
+    </div>
+    <div class="col-md-8"> 
+        <h6> Select Genre :</h6>
+    </div>
+</div>
+</div>
+
+<div class="row w-100 justify-content-between">
+    <div class="col-md-4">
+        <form>
+            <div class="input-group m-3">
+                    <input class="form-control ms-1 rounded-pill" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type="search" placeholder="Search" aria-label="Search">
+                    <button type="button" class="btn btn-secondary rounded-pill ms-1 me-1" (click)="onSearch()">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-8">
+
+        <div class="d-flex flex-wrap gap-2 justify-content-center py-3 ">
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Adventure</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Comedy</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Drama</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Feel Good</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Fiction</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Horror</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Mystery</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Psychological</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Romcom</button>
+            <button #toggleBtn (click)="onQuickLinkClick($event)" class="btn btn-light rounded-pill border border-dark border-opacity-10" data-bs-toggle="button" aria-pressed="true" type="button">Thriller</button>
+          </div>
+
+    </div>
+</div>

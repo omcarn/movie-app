@@ -1,0 +1,166 @@
+<h6 class=" d-inline ms-4">
+  Origin :
+</h6>
+<div class="btn-group"  role="group" >
+
+  <span class="form-check form-check-inline" >
+    <input class="form-check-input" type="radio" checked name="origin" id="radio-all" [(ngModel)]="originType" 
+    [ngModelOptions]="{standalone: true}" (ngModelChange)="onOriginChange($event)"
+    [value]="'All'">
+    <label class="form-check-label" for="radio-all">
+      All
+    </label>
+  </span>
+
+  <span class="form-check form-check-inline" >
+    <input class="form-check-input" type="radio" name="origin" id="radio-india" [(ngModel)]="originType" 
+    [ngModelOptions]="{standalone: true}" (ngModelChange)="onOriginChange($event)"
+    [value]="'Indian'">
+    <label class="form-check-label" for="radio-india">
+      Indian
+    </label>
+  </span>
+
+  <span class="form-check form-check-inline" >
+    <input class="form-check-input" type="radio" name="origin" id="radio-international" [(ngModel)]="originType" 
+    [ngModelOptions]="{standalone: true}" (ngModelChange)="onOriginChange($event)"
+    [value]="'International'">
+    <label class="form-check-label" for="radio-international">
+      International
+    </label>
+  </span>
+</div>
+
+<div class="ms-md-5 d-flex d-md-inline-flex justify-content-center justify-content-md-start">
+  <button type="button" class="btn btn-sm btn-warning rounded-pill ms-4 mt-2" (click)="reset()" >Reset &#8634;</button>
+</div>
+
+<div class="py-5 bg-light">
+  <div class="container w-75">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+
+      @for (item of items; track item.id) {
+      <div class="col">
+        <div class="card shadow-sm outer-card">
+
+          <div class="bd-placeholder-img card-img-top border-none">
+            <div [innerHTML]="item?.trailerEmbedLink"></div>
+          </div>
+
+          <div class="card-body" data-bs-toggle="modal" data-bs-target="#currentMovieModal" (click)="setModalDetails(item)">
+
+            <h6> {{item.title}} </h6>
+
+            <p class="card-text shortDescription-text">
+              {{item.shortDescription.length > 100 ? (item.shortDescription | slice:0:100) + '...' :
+              item.shortDescription}}
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                  data-bs-target="#currentMovieModal">View Details</button>
+              </div>
+              <small class="text-muted genre-text">| {{item.genre}} | </small>
+
+              <button type="button" class="btn btn-sm btn-outline-primary"><i class="bi bi-hand-thumbs-up"></i>
+                {{item?.likeCount}}</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="currentMovieModal" tabindex="-1" aria-labelledby="titleLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered h-90">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="titleLabel">{{currentMovie?.title}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- modal body for smaller devices -->
+      <div class="modal-body d-flex justify-content-center">
+        <div class="d-xs-block d-lg-none" style="width: 18rem; height: 10rem;">
+
+          <div class="bd-placeholder-img card-img-top" width="100%" height="100%">
+            <div class="border-none" [innerHTML]="currentMovie?.trailerEmbedLink"></div>
+          </div>
+          <div class="card-body mt-3">
+            <div class="row">
+              <div class="col-4">
+                <h6> {{currentMovie?.genre}} </h6>
+              </div>
+              <div class="col-4 d-flex justify-content-center">
+                <h6>{{currentMovie?.releaseYear}}</h6>
+              </div>
+              <div class="col-4 d-flex justify-content-end">
+                <h6>IMDb : {{currentMovie?.rating}}</h6>
+              </div>
+            </div>
+            <hr>
+            <h6>Description : </h6>
+            <p class="card-text">
+              {{currentMovie?.longDescription}}
+            </p>
+          </div>
+
+        </div>
+
+        <!-- modal body for lg devices -->
+        <div class="card d-none d-lg-block border-0">
+
+          <div class="row h-50">
+            <div class="col-6">
+              <div class="border-none h-100" [innerHTML]="currentMovie?.trailerEmbedLink"></div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+                <h6 class="m-4"> {{currentMovie?.genre}} </h6>
+                <h6 class="m-4"> {{currentMovie?.releaseYear}}</h6>
+                <h6 class="m-4">IMDb : {{currentMovie?.rating}}</h6>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <div class="row top-5">
+            <h6>Description : </h6>
+            <p class="card-text">
+              {{currentMovie?.longDescription}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-outline-primary" 
+        [ngStyle]="{'pointer-events': hasLikedExceptional ? 'none' : 'auto'}"          
+          (click)="addExceptionalCount(currentMovie.id)">
+          Exceptional <i class="bi bi-star"></i> {{currentMovie?.exceptionalCount}}</button>
+
+        <button type="button" class="btn btn-outline-primary" 
+        [ngStyle]="{'pointer-events': hasLiked ? 'none' : 'auto'}"
+          (click)="addLikeCount(currentMovie.id)">
+          <i class="bi bi-hand-thumbs-up"></i> {{currentMovie?.likeCount}}
+        </button>
+
+        <!-- TBD -->
+        <!-- <button type="button" class="btn btn-outline-success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share"
+            viewBox="0 0 16 16">
+            <path
+              d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5m-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
+          </svg>
+          Share
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
